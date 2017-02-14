@@ -1,0 +1,306 @@
+Install node JS 7
+
+$ sudo apt-get install python-software-properties
+$ curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
+$ sudo apt-get install nodejs
+
+React on rails gem in Gemfile
+
+$ rails generate react_on_rails:install
+$ bundle && npm i
+$ foreman start -f Procfile.dev
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# *** Rails Commands ***
+
+# Controller commands
+1. $ rails g controller <controller-name> <view1> <view2> <options>
+	eg : rails g controller sessions create delete --no-assets
+	options: --no-assets, --no-helper, --no-controller-specs, --no-view-specs
+	ref: config no:1 to skip file while generations.
+
+
+# Routes
+1. $ rake routes CONTROLLER=api/v1/users  	-> listing specific routes ( rails < 5 )
+   $ rails routes -c <controller_name>	-> rails > 5   eg: rails routes -c users
+
+# Server
+1. $ rails s -e production	-> Start server in production environment
+
+# Secret
+1. $ rails secret	-> generates a secret key which can be used in the secrets.yml
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Config
+
+1. config.generators.assets = false	-> to skip generating the assets.
+	file: application.rb
+
+2. #to skip assets, scaffolds.css, test framework, helpers, view in application.rb
+  config.generators do |g|
+    g.template_engine nil #to skip views
+    g.test_framework  nil #to skip test framework
+    g.assets  false
+    g.helper false
+    g.stylesheets false
+  end
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Migrations
+
+$ rails g migration AddAuthenticationTokenToUser authentication_token:string  	-> add authentication_token to users table
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Test case
+
+1. include it to show the progress bar while running test case.
+Minitest::Reporters.use!(Minitest::Reporters::ProgressReporter.new, ENV, Minitest.backtrace_filter)
+
+2. include it to show the milli secs while running test case.
+Minitest::Reporters.use!(Minitest::Reporters::SpecReporter.new, ENV, Minitest.backtrace_filter)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Rake Tasks
+
+# Built-in Tasks
+
+$ rake rails:update		-> will update the rails and creates the missing files
+$ rake dev:cache		-> rails 5 - creates caching-dev.txt and enables caching in dev environment
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Heroku Commands
+
+$ heroku login
+$ heroku keys:add				-> if the keys are not added while logging in
+$ heroku create					-> creating heroku app
+$ heroku rename <new_name>			-> renaming the randomn heroku app name with user defined name
+$ git push heroku master			-> to push the master git branch to heroku
+$ git push heroku yourbranch:master		-> to push a branch othen git branch than master to heroku
+$ heroku run rake db:migrate			-> runs the command in heroku
+$ heroku run:detached rake db:migrate		-> runs db:migrate in the background. Use this when your firewall is blocking the heroku commands
+$ heroku ps					-> to check the state of the app and the dynos running
+$ heroku ps:scale web=1				-> 
+$ heroku open					-> will open the heroku in browser
+$ heroku git:clone -a <app_name>		-> This will clone the heroku app with given <app_name>
+$ heroku config:set BUILDPACK_URL=<url>		-> to set the build pack url
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Swagger Docs
+
+$ rake swagger:docs --trace
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+# Ruby code bits
+
+$ "foo_bar_zoo".split('_').to_enum.with_index.map{|s,i| s.capitalize}.join(" ") 	-> "Foo Bar Zoo"
+
+
+******************************************************************************************************
+
+# *** Git Commands ***
+
+# Linux Commands
+$ su - sakthi -> switch to user with folders access
+$ su sakthi -> switch to user without folders access
+$ su -i   -> switch to root user
+
+# Installing Git from cmd line
+$ sudo apt-get install git-all
+
+# Setting username and email
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@example.com
+$ git config --global http.sslVerify false
+
+# Configure text editor in mac
+$ git config --global core.editor <editor_name>
+
+# On a x86 system
+$ git config --global core.editor "'C:/Program Files/Notepad++/notepad++.exe' -multiInst -nosession"
+
+# On a x64 system
+$ git config --global core.editor "'C:/Program Files (x86)/Notepad++/notepad++.exe' -multiInst -nosession"
+
+# To list the options you've set in GIT
+$ git config --list
+$ git config <key>            -> for specific key eg: $ git config user.name
+
+# Getting Help
+$ git help <verb>   -> eg: git help config
+$ git <verb> --help
+$ man git-<verb>
+
+# Initializing git repository
+$ git init
+
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+
+# Clone a existing
+$ git clone [url]
+$ git clone [url] <new_name>
+
+# Get the status
+$ git status
+
+# Difference between staged and modified files
+$ git diff
+$ git diff --staged -> compares your staged changes to your last commit
+$ git diff <branch1> <branch2>  -> compares two branches or commits
+
+# Git ignore
+$ cat .gitignore
+*.[oa]
+*~
+# some Git ignore examples   -> https://github.com/github/gitignore
+  *.a             ->  # no .a files
+  !lib.a    ->  # but do track lib.a, even though you're ignoring .a files above
+  /TODO   ->  # only ignore the TODO file in the current directory, not subdir/TODO
+  build/    ->  # ignore all files in the build/ directory
+  doc/*.txt ->  # ignore doc/notes.txt, but not doc/server/arch.txt
+  doc/**/*.pdf  ->  # ignore all .pdf files in the doc/ directory
+
+# Adding content to git ignore
+$ echo "Filepath/filename" >> .gitignore  -> will append the file to .gitignore file
+
+# Commiting the changes
+$ git commit
+$ git commit -m "<comments>"
+$ git commit -a -m "<comments>"   -> add and commmit with comment
+
+# Removing file from git
+$ git rm <file_name>
+$ git rm --cached README  -> remove it from staging area but is to be present in HD
+$ git rm abc/\*.log   -> remove all files in the abc directory with .log extention
+
+# Moving a file
+$ git mv <file_from> <file_to>
+
+
+# Git Logs
+$ git log     -> lists the log in date DESC
+$ git log -p -2     -> logs with difference introduced in each commit with -p and -2 for last two entries
+$ git log --stat    -> gives abbrivated stats for each commit
+$ git log --pretty=oneline  -> With pretty we can give some options for the logs
+$ git log --pretty=format:"%h - %an, %ar : %s"  -> format with pretty will help us to customize the log format
+$ git log --pretty=format:"%h %s" --graph -> graph option with format or oneline will give you the ASCII graph
+$ git log --oneline --decorate  -> decorate will show where the HEAD is pointed
+
+# Options for git log
+# Option    Description
+-p    Show the patch introduced with each commit.
+--stat    Show statistics for files modified in each commit.
+--shortstat Display only the changed/insertions/deletions line from the --stat command.
+--name-only Show the list of files modified after the commit information.
+--name-status Show the list of files affected with added/modified/deleted information as well.
+--abbrev-commit Show only the first few characters of the SHA-1 checksum instead of all 40.
+--relative-date Display the date in a relative format (for example, “2 weeks ago”) instead of using the full date format.
+--graph   Display an ASCII graph of the branch and merge history beside the log output.
+--pretty  Show commits in an alternate format. Options include oneline, short, full, fuller, and format (where you specify your own format).
+
+# Options for pretty format
+Option  Description of Output
+%H  Commit hash
+%h  Abbreviated commit hash
+%T  Tree hash
+%t  Abbreviated tree hash
+%P  Parent hashes
+%p  Abbreviated parent hashes
+%an Author name
+%ae Author email
+%ad Author date (format respects the --date=option)
+%ar Author date, relative
+%cn Committer name
+%ce Committer email
+%cd Committer date
+%cr Committer date, relative
+%s  Subject
+
+# Limiting log 
+$ git log --since=2.weeks -> will give logs for the last two weeks yous can also user --until
+$ git log -Sfunction_name -> -S will get the changes done in specific file or functionn in a file
+
+# Options along with git log
+Option      Description
+-(n)      Show only the last n commits
+--since, --after  Limit the commits to those made after the specified date.
+--until, --before Limit the commits to those made before the specified date.
+--author    Only show commits in which the author entry matches the specified string.
+--committer   Only show commits in which the committer entry matches the specified string.
+--grep      Only show commits with a commit message containing the string
+-S      Only show commits adding or removing code matching the string
+
+eg: $ git log --pretty="%h - %s" --author=gitster --since="2008-10-01" \
+
+
+# Undoing in git
+$ git commit --amend      -> will commit with the previous commit message or you can use it to change the commit msg
+$ git reset HEAD <filename>   -> unstaging a staged file or path 
+$ git checkout -- <filename>    -> discard the changes you’ve made to that file
+
+
+# Remotes
+$ git clone <remote_url>
+$ git remote -v     -> lists the remote gits with url
+$ git remote add <user_defined_name> <remote_url> -> adding a remote 
+$ git fetch <remote-name> -> fetches the data to the local but will not merge it. Manual merging
+$ git push <remote-name> master  ->  git push <remote-branch> <local-branch>
+$ git remote show <remote-name>
+$ git remote rename <old_name> <new_name>
+$ git remote rm <remote-name>
+$ git checkout -b <local> <origin/remote-branch>  -> fetches the remote branch and creates a local branch (NOTE: git fetch --all -> to pull all the remote branch)
+
+# Tags
+$ git tags
+$ git tags -l "v1.8"      -> will list all tags statring with v1.8
+$ git tag -a v1.4 -m "my version 1.4" -> -a will create a annonated tag and -m for comment
+$ git tag v1.4-lw     -> will create a lightweight tag
+$ git show v1.4-lw      -> will show the tag info
+$ git tag -a v1.2 9fceb02   -> v1.2 is version name and 9fceb02 hash short
+$ git push origin v1.5      -> pushing tags along with origin. v1.5 is the tag name
+
+# Aliases
+$ git config --global alias.<alias_name> <command_name>
+eg: $ git config --global alias.co checkout
+eg: $ git config --global alias.br branch
+
+$ git config --global alias.last 'log -1 HEAD'
+usage: git log
+
+# Updating Submodule
+$ git submodule update --init
+
+# remove files that are not in remote
+$ git clean -f -d
+
+# Rebasing the master to the current branch
+$ git pull --rebase origin master
+
+# Rebasing the last 2 commits i.e., the last two commits will combine to the latest commit.
+$ git rebase -i HEAD~2
+
+$ git rebase --abort    -> To abort rebasing
+$ git rebase --continue   -> To continue rebasing
+
+
+# show differences between index and working tree
+# that is, changes you haven't staged to commit
+$ git diff [filename]
+
+# show differences between current commit and index
+# that is, what you're about to commit
+$ git diff --cached [filename]
+
+# show differences between current commit and working tree
+$ git diff HEAD [filename]
+
+$ git cherry-pick <commit-id>
+
+# Will reset the HEAD to the given commit. Then you can pull the latest code pushed to the branch.
+$ git reset --hard a155315d341cc815d15c15ca293c5e8b4956c220

@@ -1,0 +1,22 @@
+## Environment settings
+defaults: &defaults
+  application_name: Sblog
+  host: localhost
+  port: 3030
+  protocol: http
+  relative_url_root: /
+  support_email: 'admin@sblog.com'
+
+  asset_host:
+    enabled: false
+    url: http://localhost:3030
+
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

@@ -1,0 +1,12 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+admin:
+  email: 'admin@lblog.com'
+  user_name: 'admin'
+  password_digest: MyString
+  first_name: 'admin'
+  last_name: 'lblog'
+  activated_at: 2016-11-24 11:05:06
+  status: 1
+  type: 1
+  reset_sent_at: 2016-11-24 11:05:06
